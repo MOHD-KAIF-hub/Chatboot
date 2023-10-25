@@ -1,0 +1,12 @@
+.refresh{
+    width: 98%;
+    margin: auto;
+    height: 5%;
+    border-bottom: solid 0.5px #D3D3D3;
+    display: flex;
+    justify-content: flex-end;
+}
+.refresh .refresh1{
+    margin: auto 5px;
+    cursor: pointer;
+}

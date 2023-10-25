@@ -1,0 +1,17 @@
+
+.text_field  input{
+    width: 100%;
+    outline: none;
+    margin-bottom: 2px;
+    padding: 1.2%;
+    border-radius: 0.25rem;
+    border: solid 0.5px #D3D3D3;
+    
+}
+.text_field .arrow{
+    margin-left: -30px;
+    transform: rotate(45deg);
+    cursor: pointer;
+    font-size: 20px;
+    margin-top: 3px;
+}
