@@ -1,18 +1,53 @@
+
+
 .Main{
     display: flex;
     flex-direction: column;
     margin:20px 40px 20px 40px;
     gap: 20px;
+    background-color: white;
 }
 
 .Container{
     border-radius: 0.25rem;
     border: solid 0.5px #D3D3D3;
-   height: 560px;
+   height: 480px;
    align-items: center;
    padding-bottom:5px ;
    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
  
+}
+.iconstatus{
+    position: absolute;
+    margin:20px 30px 60px 30px;
+     height: 60px;
+     width: 60px;
+     bottom: 0;
+     right: 0;
+     z-index: 100;
+     border-radius: 50%;
+     background-color: #76D7C4;
+     color:#F7DC6F;
+     display: flex;
+     align-items: center;
+     cursor: pointer;
+}
+.iconstatus:hover{
+  background-color: #F7DC6F;
+  color:#76D7C4;
+}
+.iconstatus .robot{
+    width: 90%;
+    height: 90%;
+    margin: auto;
+} 
+
+
+@media (max-width:300px)
+{
+    .Main{
+        width: 50% ;
+    }
 }
 
 

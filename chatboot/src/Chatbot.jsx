@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import './Chatbot.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faComments } from "@fortawesome/free-solid-svg-icons";
+import { faComments,faRobot } from "@fortawesome/free-solid-svg-icons";
 import { v4 as uuidv4 } from 'uuid';
 import MessageBody from './components/MessageBody';
 import RefreshButton from './components/RefreshButton';
@@ -10,10 +10,11 @@ import TextField from './components/TextField';
 
 const Chatbot = () => {
   const [userInput1, setUserInput1] = useState('');
+  const [iconstaus,seticonstatus]=useState(true);
   const [messages, setMessages] = useState([
     {
       id: uuidv4(),
-      text: 'How can I help you',
+      text: 'How can I help you?',
       sender: 'Chatbot',
     },
   ]);
@@ -74,41 +75,58 @@ const Chatbot = () => {
     e.preventDefault();
     handleUserInput(userInput1);
     setUserInput1('');
+
   };
 
   const reload = () => {
     setMessages([
       {
         id: uuidv4(),
-        text: 'How can I help you',
+        text: 'How can I help you?',
         sender: 'Chatbot',
       },
     ]);
   };
+  const CloseChatbot=()=>{
+    seticonstatus(!iconstaus);
+  }
 
   return (
-    <div className="Main">
+    <>
+     {iconstaus===true?<div className='iconstatus' onClick={()=>{
+      seticonstatus(!iconstaus);
+     }}>
+     <FontAwesomeIcon className='robot' icon={faRobot} />
+              
+     </div>:<div className="Main">
       <h1>
         Chatbot <FontAwesomeIcon icon={faComments} />
       </h1>
       <div className="Container">
       {/* Refresh Part */}
-        <RefreshButton onClick={reload} />
+        <RefreshButton refresh={reload} close={CloseChatbot}/>
         {/* Message Body Part */}
         <MessageBody messages={messages} />
         {/* Input field Area */}
         <TextField
           value={userInput1}
-          onChange={(e) => setUserInput1(e.target.value)}
+          onChange={(e) => {
+            setUserInput1(e.target.value);
+            }}
           onKeyPress={(e) => {
             if (e.key === 'Enter') {
               handleSubmit(e);
             }
           }}
           onClick={handleSubmit}
+
         />
       </div>
     </div>
+  }
+    </>
+
+    
   );
 };
 

@@ -2,10 +2,11 @@
     --message-background-color: rgb(245, 243, 243);
     --incoming-message-background-color: #007bff;
     --incoming-message-text-color: white;
+    --profile-text-color:#0099FF;
   }
   
   .Body {
-    height: 85%;
+    height: 78%;
     margin: 10px;
     overflow: auto;
     
@@ -45,3 +46,4 @@
     flex-direction: row;
   }
   
+
