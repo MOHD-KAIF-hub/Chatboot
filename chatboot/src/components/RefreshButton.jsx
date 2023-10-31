@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowsRotate,faXmark } from "@fortawesome/free-solid-svg-icons";
 import './RefreshButton.css';
-import pic from './kaif.jpg'
+import pic from '../kaif.jpg'
 
 const RefreshButton = ({ refresh ,close}) => {
   return (
