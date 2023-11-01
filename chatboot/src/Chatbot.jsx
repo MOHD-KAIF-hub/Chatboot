@@ -10,7 +10,7 @@ import TextField from './components/TextField';
 
 const Chatbot = () => {
   const [userInput1, setUserInput1] = useState('');
-  const [iconstaus,seticonstatus]=useState(true);
+  const [iconstatus,seticonstatus]=useState(true);
   const [messages, setMessages] = useState([
     {
       id: uuidv4(),
@@ -88,17 +88,18 @@ const Chatbot = () => {
     ]);
   };
   const CloseChatbot=()=>{
-    seticonstatus(!iconstaus);
+    seticonstatus(!iconstatus);
   }
 
   return (
     <>
-     {iconstaus===true?<div className='iconstatus' onClick={()=>{
-      seticonstatus(!iconstaus);
+     <div className='iconstatus' onClick={()=>{
+      seticonstatus(!iconstatus);
      }}>
      <FontAwesomeIcon className='robot' icon={faRobot} />
-              
-     </div>:<div className="Main">
+      </div>
+    {!iconstatus && 
+     <div className="Main">
       <div className='upper_main'>
         Chatbot <FontAwesomeIcon icon={faComments} />
       </div>
@@ -123,7 +124,8 @@ const Chatbot = () => {
         />
       </div>
     </div>
-  }
+    }
+  
     </>
 
     

@@ -10,7 +10,6 @@ const TextField = ({ value, onChange, onKeyPress, onClick }) => {
     <div className="text_field">
       <input
         type="text"
-        placeholder="Type your Message here"
         value={value}
         onChange={onChange}
         onKeyPress={onKeyPress}
