@@ -99,9 +99,9 @@ const Chatbot = () => {
      <FontAwesomeIcon className='robot' icon={faRobot} />
               
      </div>:<div className="Main">
-      <h1>
+      <div className='upper_main'>
         Chatbot <FontAwesomeIcon icon={faComments} />
-      </h1>
+      </div>
       <div className="Container">
       {/* Refresh Part */}
         <RefreshButton refresh={reload} close={CloseChatbot}/>

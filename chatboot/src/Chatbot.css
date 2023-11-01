@@ -7,13 +7,15 @@
     gap: 20px;
     background-color: white;
 }
+.upper_main{
+    font-size: 30px;
+}
 
 .Container{
     border-radius: 0.25rem;
     border: solid 0.5px #D3D3D3;
    height: 480px;
    align-items: center;
-   /* padding-bottom:3px ; */
    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
  
 }
