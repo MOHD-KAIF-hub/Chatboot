@@ -2,11 +2,12 @@
 import React, { useState } from 'react';
 import './Chatbot.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faComments,faRobot } from "@fortawesome/free-solid-svg-icons";
+import { faComments,faXmark } from "@fortawesome/free-solid-svg-icons";
 import { v4 as uuidv4 } from 'uuid';
 import MessageBody from './components/MessageBody';
 import RefreshButton from './components/RefreshButton';
 import TextField from './components/TextField';
+import chatlogo from './assets/chatcells.png';
 
 const Chatbot = () => {
   const [userInput1, setUserInput1] = useState('');
@@ -87,25 +88,27 @@ const Chatbot = () => {
       },
     ]);
   };
-  const CloseChatbot=()=>{
+  const handleClick=()=>{
     seticonstatus(!iconstatus);
   }
 
   return (
     <>
-     <div className='iconstatus' onClick={()=>{
-      seticonstatus(!iconstatus);
-     }}>
-     <FontAwesomeIcon className='robot' icon={faRobot} />
+    {iconstatus? <div className='iconstatus' style={{"background-color":"#ff6347"}} onClick={handleClick}>
+  <img src={chatlogo} alt='pic' className='chatlogo'/>
+      </div>:
+     <div className='iconstatus' style={{"background-color":"#5e455a"}}  onClick={handleClick}>
+     <FontAwesomeIcon className='Xmark' icon={faXmark} />
       </div>
-    {!iconstatus && 
-     <div className="Main">
+    }
+
+     <div className={`Main ${!iconstatus?'show':''}`}>
       <div className='upper_main'>
         Chatbot <FontAwesomeIcon icon={faComments} />
       </div>
       <div className="Container">
       {/* Refresh Part */}
-        <RefreshButton refresh={reload} close={CloseChatbot}/>
+        <RefreshButton refresh={reload} close={handleClick}/>
         {/* Message Body Part */}
         <MessageBody messages={messages} />
         {/* Input field Area */}
@@ -124,7 +127,6 @@ const Chatbot = () => {
         />
       </div>
     </div>
-    }
   
     </>
 
@@ -133,6 +135,4 @@ const Chatbot = () => {
 };
 
 export default Chatbot;
-
-
 
