@@ -94,10 +94,10 @@ const Chatbot = () => {
 
   return (
     <>
-    {iconstatus? <div className='iconstatus' style={{"background-color":"#ff6347"}} onClick={handleClick}>
+    {iconstatus? <div className='iconstatus' style={{"backgroundColor":"#ff6347"}} onClick={handleClick}>
   <img src={chatlogo} alt='pic' className='chatlogo'/>
       </div>:
-     <div className='iconstatus' style={{"background-color":"#5e455a"}}  onClick={handleClick}>
+     <div className='iconstatus' style={{"backgroundColor":"#5e455a"}}  onClick={handleClick}>
      <FontAwesomeIcon className='Xmark' icon={faXmark} />
       </div>
     }
