@@ -16,7 +16,7 @@ const Chatbot = () => {
   const [theme, settheme] = useState('')
   const [name, setname] = useState("");
   const [placeholder, setplaceholder] = useState('');
-  const [userMessageColor, setuserMessageColor] = useState('');
+  const [userMessageColor, setuserMessageColor] = useState('#3F6212');
   const [position, setposition] = useState('');
   const [chatbotIcon, setchatbotIcon] = useState();
   const [chatbotProfilePic, setchatbotProfilePic] = useState();
@@ -108,48 +108,53 @@ const [conversationId,setconversationId]=useState('');
       setchatbotId( bodyData.chatbotId);
     }
     const getData = async () => {
-      let response = await fetch(`https://freight-service.azurewebsites.net/api/getChatbotUIDetails`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(bodyData)
-      });
-      if (response.ok) {
-        const res = await response.json();
-      
-        const initialMessage = res.initialMessage.split('\n');
-        let temp = [];
-        for (let x in initialMessage) {
-          if(initialMessage[x]){
-          temp.push({
-            text: initialMessage[x],
-            sender: 'Chatbot'
-          })
+      try {
+        let response = await fetch(`https://freight-service.azurewebsites.net/api/getChatbotUIDetails`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(bodyData)
+        });
+        if (response.ok) {
+          const res = await response.json();
+          
+          const initialMessage = res.initialMessage.split('\n');
+          let temp = [];
+          for (let x in initialMessage) {
+            if(initialMessage[x]){
+              temp.push({
+                text: initialMessage[x],
+                sender: 'Chatbot'
+              });
+            }
+          }
+          setMessages(temp);
+          setinitialMessages(temp);
+          const suggestedMessages = res.suggestedMessages.split('\n');
+          const temp1 = [];
+          for (let x in suggestedMessages) {
+            if(suggestedMessages[x]) {
+              temp1.push(suggestedMessages[x]);
+            }
+          }
+          setquestions(temp1);
+          setplaceholder(res.messagePlaceholder);
+          settheme(res.theme);
+          setname(res.chatbotDisplayName);
+          setposition(res.chatBubbleButtonAlignment);
+          setchatbotIcon(res.chatbotIcon);
+          setchatbotProfilePic(res.chatbotProfilePic);
+          setchatBubbleButtonColor(res.chatBubbleButtonColor);
+          setuserMessageColor(res.userMessageColor);
+        } else {
+          console.log("Error in response");
         }
-        }
-        setMessages(temp);
-        setinitialMessages(temp);
-        const suggestedMessages = res.suggestedMessages.split('\n');
-        const temp1 = [];
-        for (let x in suggestedMessages) {
-          if(suggestedMessages[x])
-          temp1.push(suggestedMessages[x]);
-        }
-        setquestions(temp1);
-        setplaceholder(res.messagePlaceholder);
-        settheme(res.theme);
-        setname(res.chatbotDisplayName);
-        setposition(res.chatBubbleButtonAlignment)
-        setchatbotIcon(res.chatbotIcon);
-        setchatbotProfilePic(res.chatbotProfilePic);
-        setchatBubbleButtonColor(res.chatBubbleButtonColor);
-        setuserMessageColor(res.userMessageColor);
-      }
-      else {
-        console.log("Error in response");
+      } catch (error) {
+        console.error("Error occurred:", error);
       }
     }
+    
     getData();
 
   }, [])
@@ -189,7 +194,7 @@ const [conversationId,setconversationId]=useState('');
                {  messages.map((message, ind) => ( message.text &&
                 <div className={` z-100 ${message.sender === 'User' ? 'justify-end flex' : ''}`} key={ind}>
                   <div className={` m-[5px] p-[10px] min-w-[50px] max-w-[80%] text-left min-h-[20px] text-sm inline-block rounded-xl border-[2px] border-solid border-lime-500/25`} style={{
-                    backgroundColor: message.sender === 'User' ? (userMessageColor===('Default'||'')?'#3F6212':userMessageColor) : '#E5E7EB',
+                    backgroundColor: message.sender === 'User' ? (userMessageColor===('Default')?'#3F6212':userMessageColor) : '#E5E7EB',
                     color: message.sender === 'User' ? 'white' : 'black',
                   }} >
                     <ChatbotResponse
