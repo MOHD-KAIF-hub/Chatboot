@@ -4,7 +4,6 @@ import { RxCross2 } from "react-icons/rx";
 import { LuRefreshCcw } from "react-icons/lu";
 import { IoMdSend } from "react-icons/io";
 import { RiArrowDownSLine } from 'react-icons/ri';
-import chatlogo from "../assets/chatlogo.png"
 import ChatbotResponse from './ChatbotResponse';
 import "./Chatbot.css"
 
@@ -12,29 +11,29 @@ import "./Chatbot.css"
 const Chatbot = () => {
 
   const [userInput1, setUserInput1] = useState('');
+  const [initialMessages,setinitialMessages]=useState([{}]);
   const [iconstatus, seticonstatus] = useState(true);
-  const [theme, settheme] = useState('dark')
-  const [name, setname] = useState("Teaching Assistant");
+  const [theme, settheme] = useState('')
+  const [name, setname] = useState("");
   const [placeholder, setplaceholder] = useState('');
-  const [userMessageColor, setuserMessageColor] = useState('blue');
-  const [position, setposition] = useState('right');
-  const [chatbotIcon, setchatbotIcon] = useState(chatlogo);
-  const [chatbotProfilePic, setchatbotProfilePic] = useState(chatlogo);
+  const [userMessageColor, setuserMessageColor] = useState('');
+  const [position, setposition] = useState('');
+  const [chatbotIcon, setchatbotIcon] = useState();
+  const [chatbotProfilePic, setchatbotProfilePic] = useState();
   const [chatBubbleButtonColor, setchatBubbleButtonColor] = useState();
   const [messages, setMessages] = useState([
     {
-      text: '👋 Hi! how can I assist you today?',
-      sender: 'Chatbot',
-    },
+      text: '',
+      sender:'Chatbot'
+    }
   ]);
   const [isLoading, setIsLoading] = useState(false);
 
   const [questions, setquestions] = useState([
-
-    "What is Talent Academy Ai",
   ]);
-const [chatbotId,setchatbotId]=useState("initial_d5d96719-cb68-4419-9fc3-ff53357ab291");
+const [chatbotId,setchatbotId]=useState("");
 const [conversationId,setconversationId]=useState('');
+//Calling function for handling userQuery
   const handleUserInput = async (userInputText) => {
     if (userInputText === "") return;
 
@@ -45,7 +44,7 @@ const [conversationId,setconversationId]=useState('');
     setMessages((prevMessages) => [...prevMessages, userMessage]);
     setIsLoading(true);
 
-    // Uncomment the following section to make the API call
+ 
     setTimeout(async () => {
       try {
         const requestBody = {
@@ -70,7 +69,6 @@ const [conversationId,setconversationId]=useState('');
         const data = await res.json();
         setconversationId(data.conversationId);
 
-        console.log(data);
         const botResponse = {
           text: `${data.response}`,
           sender: 'Chatbot',
@@ -96,18 +94,14 @@ const [conversationId,setconversationId]=useState('');
   };
 
   const reload = () => {
-    setMessages([
-      {
-        text: '👋 Hi! how can I help you today?',
-        sender: 'Chatbot',
-      },
-    ]);
+ setMessages(initialMessages);
   };
+  //To get Information about chatbot apply useEffect concept
 
   useEffect(() => {
     const bodyData = {
       "customerId": "123456789",
-      "chatbotId": "initial_d5d96719-cb68-4419-9fc3-ff53357ab291"
+      "chatbotId": ""
     };
     if (window.embeddedChatbotConfig) {
       bodyData.chatbotId = window.embeddedChatbotConfig.chatbotId;
@@ -123,7 +117,6 @@ const [conversationId,setconversationId]=useState('');
       });
       if (response.ok) {
         const res = await response.json();
-        console.log(res);
       
         const initialMessage = res.initialMessage.split('\n');
         let temp = [];
@@ -136,6 +129,7 @@ const [conversationId,setconversationId]=useState('');
         }
         }
         setMessages(temp);
+        setinitialMessages(temp);
         const suggestedMessages = res.suggestedMessages.split('\n');
         const temp1 = [];
         for (let x in suggestedMessages) {
@@ -173,7 +167,7 @@ const [conversationId,setconversationId]=useState('');
             {/* Refresh Part */}
             <div className="refresh w-[98%] mx-auto mt-2 h-[8%] border-b border-solid border-lime-500/25 flex ">
               <div className='profile flex gap-[10px] items-center p-1'>
-                {chatbotProfilePic!=='None' && <div className='p-[2px] border border-solid border-lime-500/25  rounded-[50px] bg-purple-200  mb-[5px]'>
+                {chatbotProfilePic!=='None' && chatbotProfilePic && <div className='p-[2px] border border-solid border-lime-500/25  rounded-[50px] bg-purple-200  mb-[5px]'>
                   <img src={chatbotProfilePic} alt='profile' className='w-[30px] h-[30px] bg-white rounded-full ' />
                 </div>
                 }
@@ -192,10 +186,10 @@ const [conversationId,setconversationId]=useState('');
             <div className="Body h-[70%] m-[8px] overflow-auto " >
 
 
-              {messages.map((message, ind) => (
+               {  messages.map((message, ind) => ( message.text &&
                 <div className={` z-100 ${message.sender === 'User' ? 'justify-end flex' : ''}`} key={ind}>
                   <div className={` m-[5px] p-[10px] min-w-[50px] max-w-[80%] text-left min-h-[20px] text-sm inline-block rounded-xl border-[2px] border-solid border-lime-500/25`} style={{
-                    backgroundColor: message.sender === 'User' ? (userMessageColor==='Default'?'#3F6212':userMessageColor) : '#E5E7EB',
+                    backgroundColor: message.sender === 'User' ? (userMessageColor===('Default'||'')?'#3F6212':userMessageColor) : '#E5E7EB',
                     color: message.sender === 'User' ? 'white' : 'black',
                   }} >
                     <ChatbotResponse
@@ -237,7 +231,7 @@ const [conversationId,setconversationId]=useState('');
                   </div>)
                 ))}
                 </div>
-                <div className="text_field w-[98%] mx-auto mb-6  flex z-100">
+                <div className="text_field w-[98%] mx-auto mb-3  flex z-100">
                 <input
                   type="text"
                   value={userInput1}
@@ -270,10 +264,10 @@ const [conversationId,setconversationId]=useState('');
       </div>
         
       <div
-        className={`fixed bottom-5 w-[60px] h-[60px] mr-5 mt-5 ${position === ('Right'|| 'right') ? 'right-0' : 'right-[370px]'} z-[100] rounded-full cursor-pointer flex items-center `}
+        className={`fixed bottom-5 w-[55px] h-[55px] mr-5 mt-0 ${position === ('Right'|| 'right'||'') ? 'right-0' : 'right-[370px]'} z-[100] rounded-full cursor-pointer flex items-center `}
         onClick={() => seticonstatus(!iconstatus)}
         style={{ backgroundColor: chatBubbleButtonColor ? chatBubbleButtonColor : '#3f6212' }}>
-        {iconstatus ? (
+        {iconstatus ? (chatbotIcon &&
           <img src={chatbotIcon} alt="chatlogo" className={`checkmark mx-auto  mt-[-8px] w-[70%] rounded-full font-[60px] transition-transform duration-500 ease-in-out transform ${iconstatus && 'icon-enter'}`} />
         ) : (
           <RiArrowDownSLine
