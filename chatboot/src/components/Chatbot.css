@@ -44,10 +44,10 @@
 
   @keyframes iconEnter {
     0% {
-      transform: translateY(0);
+      transform: translateY(-4px);
     }
     100% {
-      transform: translateY(6px);
+      transform: translateY(4px);
     
     }
   }
