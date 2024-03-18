@@ -6,7 +6,6 @@ import { IoMdSend } from "react-icons/io";
 import { RiArrowDownSLine } from 'react-icons/ri';
 import ChatbotResponse from './ChatbotResponse';
 import "./Chatbot.css"
-import chatlogo from '../assets/chatlogo.png'
 
 
 const Chatbot = () => {
@@ -19,7 +18,7 @@ const Chatbot = () => {
   const [placeholder, setplaceholder] = useState('');
   const [userMessageColor, setuserMessageColor] = useState('#3F6212');
   const [position, setposition] = useState('');
-  const [chatbotIcon, setchatbotIcon] = useState(chatlogo);
+  const [chatbotIcon, setchatbotIcon] = useState();
   const [chatbotProfilePic, setchatbotProfilePic] = useState();
   const [chatBubbleButtonColor, setchatBubbleButtonColor] = useState();
   const [messages, setMessages] = useState([
