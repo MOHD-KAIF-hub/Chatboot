@@ -38,19 +38,13 @@ const Chatbot = () => {
       "chatbotId": ""
     };
 
-    const parentWindow = window.parent;
-    const iframe = parentWindow.document.getElementById('chatcells.ai');
-    const iframeChatbotId=iframe.getAttribute('chatbotId');
+   
 
     if (window.embeddedChatbotConfig) {
       bodyData.chatbotId = window.embeddedChatbotConfig.chatbotId;
       setchatbotId(bodyData.chatbotId.split('_'));
     }
-    else if(iframeChatbotId)
-    {
-      bodyData.chatbotId = iframeChatbotId;
-      setchatbotId(iframeChatbotId.split('_'));
-    }
+    
     const getData = async () => {
       try {
         let response = await fetch(`https://freight-service.azurewebsites.net/api/getChatbotUIDetails`, {
