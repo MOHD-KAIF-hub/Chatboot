@@ -37,9 +37,19 @@ const Chatbot = () => {
       "customerId": "123456789",
       "chatbotId": ""
     };
+
+    const parentWindow = window.parent;
+    const iframe = parentWindow.document.getElementById('chatcells.ai');
+    const iframeChatbotId=iframe.getAttribute('chatbotId');
+
     if (window.embeddedChatbotConfig) {
       bodyData.chatbotId = window.embeddedChatbotConfig.chatbotId;
       setchatbotId(bodyData.chatbotId.split('_'));
+    }
+    else if(iframeChatbotId)
+    {
+      bodyData.chatbotId = iframeChatbotId;
+      setchatbotId(iframeChatbotId.split('_'));
     }
     const getData = async () => {
       try {
@@ -63,7 +73,6 @@ const Chatbot = () => {
               });
             }
           }
-          console.log(temp);
           setinitialMessagesArray(temp);
 
           const suggestedMessages = res.suggestedMessages.split('\n');
