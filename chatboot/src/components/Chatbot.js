@@ -39,11 +39,20 @@ const Chatbot = () => {
     };
 
   
-
+    const iframe = document.getElementById('chatcells.ai');
     if (window.embeddedChatbotConfig) {
       bodyData.chatbotId = window.embeddedChatbotConfig.chatbotId;
       setchatbotId(bodyData.chatbotId.split('_'));
       console.log(bodyData.chatbotId);
+    }
+    else if(iframe)
+    {
+      const iframeChatbotId = iframe.getAttribute('chatbotId');
+      console.log(iframeChatbotId);
+  if (iframeChatbotId) {
+    bodyData.chatbotId = iframeChatbotId;
+    setchatbotId(iframeChatbotId.split('_'));
+  }
     }
    
     
