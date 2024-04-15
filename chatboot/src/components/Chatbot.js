@@ -18,7 +18,7 @@ const Chatbot = () => {
   const [theme, settheme] = useState('')
   const [name, setname] = useState("");
   const [placeholder, setplaceholder] = useState('');
-  const [userMessageColor, setuserMessageColor] = useState('#3F6212');
+  const [userMessageColor, setuserMessageColor] = useState('');
   const [position, setposition] = useState('');
   const [chatbotIcon, setchatbotIcon] = useState();
   const [chatbotProfilePic, setchatbotProfilePic] = useState();
@@ -26,7 +26,7 @@ const Chatbot = () => {
 
 
   const [chatbotId, setchatbotId] = useState("");
-  const [conversationId, setconversationId] = useState('');
+  const conversationId = useRef('');
 
 
   //To get Information about chatbot when page will load
@@ -44,10 +44,12 @@ const Chatbot = () => {
     if (window.embeddedChatbotConfig) {
       bodyData.chatbotId = window.embeddedChatbotConfig.chatbotId;
       setchatbotId(bodyData.chatbotId.split('_'));
+      console.log(bodyData.chatbotId);
     }
     else if(iframe)
     {
       const iframeChatbotId = iframe.getAttribute('chatbotId');
+      console.log(iframeChatbotId);
   if (iframeChatbotId) {
     bodyData.chatbotId = iframeChatbotId;
     setchatbotId(iframeChatbotId.split('_'));
@@ -138,8 +140,8 @@ const Chatbot = () => {
             userQuery,
             source: 'Widget or Iframe',
           }
-          if (conversationId !== '') {
-            requestBody.conversationId = conversationId;
+          if (conversationId.current.conversationId) {
+            requestBody.conversationId = conversationId.current.conversationId;
           }
 
 
@@ -150,7 +152,7 @@ const Chatbot = () => {
               body: JSON.stringify(requestBody),
             });
             data = await response.json();
-            setconversationId(data.conversationId);
+            conversationId.current=data;
 
             // Process response data
             signals.onResponse({ text: data.response });
@@ -177,13 +179,14 @@ const Chatbot = () => {
         },
       };
     }
-  }, [chatElementRef, initialMessages, conversationId, chatbotId]);
+  }, [chatElementRef, initialMessages, conversationId,chatbotId]);
 
   const handleClick = () => {
     seticonstatus(!iconstatus);
   };
   //refreshing here
   const reload = () => {
+    conversationId.current='';
     if (initialMessagesArray && suggestedMessagesarray) {
       setinitialMessages([
         ...initialMessagesArray.filter(message => message.text.trim() !== '').map((message) => (message.text.trim() !== '' && {
@@ -205,12 +208,35 @@ const Chatbot = () => {
       ].filter(message => message !== null));
     }
     else {
+    if(initialMessagesArray){
       setinitialMessages([
         initialMessagesArray.filter(message => message.text.trim() !== '').map((message) => (message.text.trim() !== '' && {
           text: message.text,
           role: 'user'
         }))
       ].filter(message => message !== null));
+      }
+       else if(suggestedMessagesarray)
+      {
+      setinitialMessages([
+       suggestedMessagesarray
+          .filter(message => message.trim() !== '') // Filter out empty strings
+          .length > 0 ? {
+          html: `
+          <div class="deep-chat-temporary-message">
+            ${suggestedMessagesarray.map((message) => (message &&
+            `<button class="deep-chat-button deep-chat-suggestion-button" style="margin-top: 5px">${message}</button>`
+          ))
+            }
+          </div>`,
+          role: 'ai',
+        } : null
+      ].filter(message => message !== null));
+      
+      }
+      else{
+      setinitialMessages([]);
+      }
     }
   };
 
@@ -280,12 +306,13 @@ const Chatbot = () => {
                   }
                 }}
                 messageStyles={{
-                  html: { shared: { bubble: { backgroundColor: '#3F6212', paddingLeft: '4px', paddingBottom: '4px', paddingTop: '0px', width: '100%' } } },
+                  html: { shared: { bubble: { backgroundColor: '#3F6212', paddingLeft: '4px', paddingBottom: '4px', paddingTop: '0px', width: '90%' } } },
                   loading: {
                     bubble: {
-                      backgroundColor: '#3F6212',
                       color: 'white',
-                      fontSize: '16px'
+                      fontSize: '16px',
+                      padding:'17px',
+                      backgroundColor:'#F3F4F6'
                     },
                     error: {
                       bubble: { backgroundColor: "#f98e00", color: "white", fontSize: "15px" }
@@ -294,13 +321,21 @@ const Chatbot = () => {
                   default: {
                     ai: {
                       bubble: {
-                        maxWidth: "350px" // Set max-width for AI messages
+                        maxWidth: "90%",
+                        lineHeight: '1.5', 
+                        wordSpacing: '1px',
+                         backgroundColor:'#F3F4F6',
+                         padding:'10px'
                       }
                     },
                     user: {
                       bubble: {
-                        backgroundColor: userMessageColor ? userMessageColor : "lightblue",
-                        maxWidth: "350px" // Set max-width for user messages
+                        backgroundColor: userMessageColor ? userMessageColor : "rgb(132 204 22 / 0.25)",
+                        maxWidth: "90%" ,
+                        lineHeight: '1.5', 
+                        wordSpacing: '1px',
+                        color: '#3F6212',
+                         padding:'10px'
                       }
                     }
                   }
