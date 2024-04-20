@@ -25,37 +25,37 @@ const Chatbot = () => {
   const [chatBubbleButtonColor, setchatBubbleButtonColor] = useState();
 
 
-  const [chatbotId, setchatbotId] = useState("");
+  const chatbotId = useRef('');
   const conversationId = useRef('');
 
 
-  //To get Information about chatbot when page will load
+  //To get Information about chatbotId when page will load
 
   useEffect(() => {
 
     const bodyData = {
-      "customerId": "123456789",
+      "customerId": "",
       "chatbotId": ""
     };
 
-  
+
     const iframe = document.getElementById('chatcells.ai');
     if (window.embeddedChatbotConfig) {
       bodyData.chatbotId = window.embeddedChatbotConfig.chatbotId;
-      setchatbotId(bodyData.chatbotId.split('_'));
-      console.log(bodyData.chatbotId);
+      chatbotId.current = bodyData;
+
     }
-    else if(iframe)
-    {
+    else if (iframe) {
       const iframeChatbotId = iframe.getAttribute('chatbotId');
       console.log(iframeChatbotId);
-  if (iframeChatbotId) {
-    bodyData.chatbotId = iframeChatbotId;
-    setchatbotId(iframeChatbotId.split('_'));
-  }
+      if (iframeChatbotId) {
+        bodyData.chatbotId = iframeChatbotId;
+        chatbotId.current = bodyData;
+      }
     }
-   
-    
+
+    //Logic to retrieve data corresponding to chatbotId
+
     const getData = async () => {
       try {
         let response = await fetch(`https://freight-service.azurewebsites.net/api/getChatbotUIDetails`, {
@@ -135,8 +135,9 @@ const Chatbot = () => {
         handler: async (body, signals) => {
           const userQuery = body.messages[0].text;
           let data;
+          const id = chatbotId.current.chatbotId;
           const requestBody = {
-            chatbotId,
+            chatbotId: id.split('_')[1],
             userQuery,
             source: 'Widget or Iframe',
           }
@@ -152,7 +153,7 @@ const Chatbot = () => {
               body: JSON.stringify(requestBody),
             });
             data = await response.json();
-            conversationId.current=data;
+            conversationId.current = data;
 
             // Process response data
             signals.onResponse({ text: data.response });
@@ -179,14 +180,14 @@ const Chatbot = () => {
         },
       };
     }
-  }, [chatElementRef, initialMessages, conversationId,chatbotId]);
+  }, [chatElementRef, initialMessages, conversationId, chatbotId]);
 
   const handleClick = () => {
     seticonstatus(!iconstatus);
   };
   //refreshing here
   const reload = () => {
-    conversationId.current='';
+    conversationId.current = '';
     if (initialMessagesArray && suggestedMessagesarray) {
       setinitialMessages([
         ...initialMessagesArray.filter(message => message.text.trim() !== '').map((message) => (message.text.trim() !== '' && {
@@ -208,34 +209,33 @@ const Chatbot = () => {
       ].filter(message => message !== null));
     }
     else {
-    if(initialMessagesArray){
-      setinitialMessages([
-        initialMessagesArray.filter(message => message.text.trim() !== '').map((message) => (message.text.trim() !== '' && {
-          text: message.text,
-          role: 'user'
-        }))
-      ].filter(message => message !== null));
+      if (initialMessagesArray) {
+        setinitialMessages([
+          initialMessagesArray.filter(message => message.text.trim() !== '').map((message) => (message.text.trim() !== '' && {
+            text: message.text,
+            role: 'user'
+          }))
+        ].filter(message => message !== null));
       }
-       else if(suggestedMessagesarray)
-      {
-      setinitialMessages([
-       suggestedMessagesarray
-          .filter(message => message.trim() !== '') // Filter out empty strings
-          .length > 0 ? {
-          html: `
+      else if (suggestedMessagesarray) {
+        setinitialMessages([
+          suggestedMessagesarray
+            .filter(message => message.trim() !== '') // Filter out empty strings
+            .length > 0 ? {
+            html: `
           <div class="deep-chat-temporary-message">
             ${suggestedMessagesarray.map((message) => (message &&
-            `<button class="deep-chat-button deep-chat-suggestion-button" style="margin-top: 5px">${message}</button>`
-          ))
-            }
+              `<button class="deep-chat-button deep-chat-suggestion-button" style="margin-top: 5px">${message}</button>`
+            ))
+              }
           </div>`,
-          role: 'ai',
-        } : null
-      ].filter(message => message !== null));
-      
+            role: 'ai',
+          } : null
+        ].filter(message => message !== null));
+
       }
-      else{
-      setinitialMessages([]);
+      else {
+        setinitialMessages([]);
       }
     }
   };
@@ -259,7 +259,7 @@ const Chatbot = () => {
                   <img src={chatbotProfilePic} alt='profile' className='w-[30px] h-[30px] bg-white rounded-full ' />
                 </div>
                 }
-                {name && name.trim() !== '' && name !== 'None' && <span className={`font-bold text-[16px] ${theme === ('dark' || 'Dark') ? 'text-gray-400' : ''}`}>{name}
+                {name && name.trim() !== '' && name !== 'None' && <span className={`font-medium text-gray-800 opacity-90 ${theme === ('dark' || 'Dark') ? 'text-gray-400' : ''}`}>{name}
                 </span>
                 }
               </div>
@@ -306,13 +306,13 @@ const Chatbot = () => {
                   }
                 }}
                 messageStyles={{
-                  html: { shared: { bubble: { backgroundColor: '#3F6212', paddingLeft: '4px', paddingBottom: '4px', paddingTop: '0px', width: '90%' } } },
+                  html: { shared: { bubble: { backgroundColor: 'rgb(132 204 22 / 0.25)', paddingLeft: '4px', paddingBottom: '4px', paddingTop: '0px', width: '90%' } } },
                   loading: {
                     bubble: {
                       color: 'white',
                       fontSize: '16px',
-                      padding:'17px',
-                      backgroundColor:'#F3F4F6'
+                      padding: '17px',
+                      backgroundColor: '#F3F4F6'
                     },
                     error: {
                       bubble: { backgroundColor: "#f98e00", color: "white", fontSize: "15px" }
@@ -322,20 +322,20 @@ const Chatbot = () => {
                     ai: {
                       bubble: {
                         maxWidth: "90%",
-                        lineHeight: '1.5', 
+                        lineHeight: '1.5',
                         wordSpacing: '1px',
-                         backgroundColor:'#F3F4F6',
-                         padding:'10px'
+                        backgroundColor: '#F3F4F6',
+                        padding: '10px'
                       }
                     },
                     user: {
                       bubble: {
                         backgroundColor: userMessageColor ? userMessageColor : "rgb(132 204 22 / 0.25)",
-                        maxWidth: "90%" ,
-                        lineHeight: '1.5', 
+                        maxWidth: "90%",
+                        lineHeight: '1.5',
                         wordSpacing: '1px',
                         color: '#3F6212',
-                         padding:'10px'
+                        padding: '10px'
                       }
                     }
                   }
