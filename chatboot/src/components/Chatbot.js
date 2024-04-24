@@ -23,6 +23,7 @@ const Chatbot = () => {
   const [chatbotIcon, setchatbotIcon] = useState();
   const [chatbotProfilePic, setchatbotProfilePic] = useState();
   const [chatBubbleButtonColor, setchatBubbleButtonColor] = useState();
+  const [TitleBarColor,setTitleBarColor]=useState();
 
 
   const chatbotId = useRef('');
@@ -99,7 +100,7 @@ const Chatbot = () => {
               html: `
           <div class="deep-chat-temporary-message">
             ${temp1.map((message) => (message &&
-                `<button class="deep-chat-button deep-chat-suggestion-button" style="margin-top: 5px">${message}</button>`
+                `<button class="deep-chat-button deep-chat-suggestion-button" style="margin-top: 5px;text-decoration: underline; color: blue; margin-left:6px;background-color:#F3F4F6">${message}</button>`
               ))
                 }
           </div>`,
@@ -114,6 +115,7 @@ const Chatbot = () => {
           setchatbotProfilePic(res.chatbotProfilePic);
           setchatBubbleButtonColor(res.chatBubbleButtonColor);
           setuserMessageColor(res.userMessageColor);
+          setTitleBarColor(res.titleBarColor);
         } else {
           console.log("Error in response");
         }
@@ -200,7 +202,7 @@ const Chatbot = () => {
           html: `
           <div class="deep-chat-temporary-message">
             ${suggestedMessagesarray.map((message) => (message &&
-            `<button class="deep-chat-button deep-chat-suggestion-button" style="margin-top: 5px">${message}</button>`
+            `<button class="deep-chat-button deep-chat-suggestion-button" style="margin-top: 5px;text-decoration: underline; color: blue; margin-left:6px;background-color:#F3F4F6">${message}</button>`
           ))
             }
           </div>`,
@@ -247,19 +249,19 @@ const Chatbot = () => {
   return (
     <>
 
-      <div className={`fixed ${iconstatus ? 'invisible' : ''}   z-[100]  right-0 top-4  flex flex-col w-[420px]  gap-3 ml-auto rounded-xl mr-7 `}>
+      <div className={`fixed ${iconstatus ? 'invisible' : ''}   z-[100]  right-0 top-4  flex flex-col w-[420px]  gap-3 ml-auto  mr-7 `}>
 
-        <div className={`flex flex-col relative ${theme === ('dark' || 'Dark') ? 'bg-black' : 'bg-white'} gap-4 rounded-xl ${!iconstatus ? 'transition-all transform translate-y-0 duration-500 ease-in-out opacity-1' : 'opacity-0 transform translate-y-full transition-all duration-500 ease-in-out'}`}>
+        <div className={`flex flex-col relative ${theme === ('dark' || 'Dark') ? 'bg-black' : 'bg-white'} gap-4 rounded-[0.9rem] ${!iconstatus ? 'transition-all transform translate-y-0 duration-500 ease-in-out opacity-1' : 'opacity-0 transform translate-y-full transition-all duration-500 ease-in-out'}`}>
 
-          <div className=" rounded-[0.8rem] border border-solid border-lime-500/25  h-[530px] flex flex-col shadow-lg ">
+          <div className=" rounded-[0.8rem]   h-[530px] flex flex-col shadow-2xl ">
             {/* Refresh Part */}
-            <div className="refresh w-[98%] mx-auto mt-2 h-[8%] border-b border-solid border-lime-500/25 flex ">
-              <div className='profile flex gap-[10px] items-center p-1'>
-                {chatbotProfilePic !== 'None' && chatbotProfilePic && <div className='p-[2px] border border-solid border-lime-500/25  rounded-[50px] bg-purple-200  mb-[5px]'>
+            <div className="refresh w-[100%] mx-auto  h-[9%] border-b border-solid border-lime-500/25 flex " style={{ backgroundColor: TitleBarColor?TitleBarColor : 'white' }}>
+              <div className='profile flex gap-[6px] items-center p-1'>
+                {chatbotProfilePic !== 'None' && chatbotProfilePic && <div className='p-1  rounded-[50px]'>
                   <img src={chatbotProfilePic} alt='profile' className='w-[30px] h-[30px] bg-white rounded-full ' />
                 </div>
                 }
-                {name && name.trim() !== '' && name !== 'None' && <span className={`font-medium text-gray-800 opacity-90 ${theme === ('dark' || 'Dark') ? 'text-gray-400' : ''}`}>{name}
+                {name && name.trim() !== '' && name !== 'None' && <span className={`font-medium text-gray-800 ml-1.5 opacity-90 ${theme === ('dark' || 'Dark') ? 'text-gray-400' : ''}`}>{name}
                 </span>
                 }
               </div>
@@ -276,7 +278,7 @@ const Chatbot = () => {
 
               <DeepChat
 
-                style={{ width: '100%', height: '460px', border: 'none' }}
+                style={{ width: '100%', height: '460px', border: 'none',backgroundColor:'transparent' }}
                 textInput={{
                   styles: {
                     text: { color: 'black' },
@@ -306,7 +308,7 @@ const Chatbot = () => {
                   }
                 }}
                 messageStyles={{
-                  html: { shared: { bubble: { backgroundColor: 'rgb(132 204 22 / 0.25)', paddingLeft: '4px', paddingBottom: '4px', paddingTop: '0px', width: '90%' } } },
+                  html: { shared: { bubble: { backgroundColor: 'transparent', paddingLeft: '4px', paddingBottom: '4px', paddingTop: '0px', width: '90%' } } },
                   loading: {
                     bubble: {
                       color: 'white',
@@ -357,7 +359,7 @@ const Chatbot = () => {
       </div>
 
       <div
-        className={`fixed bottom-5 w-[55px] h-[55px] mr-5 mt-0 ${position === ('Right' || 'right' || '') ? 'right-0' : 'right-[370px]'} z-[100] rounded-full cursor-pointer flex items-center `}
+        className={`fixed bottom-8 w-[55px] h-[55px] mr-5 mt-0 ${position === ('Right' || 'right' || '') ? 'right-0' : 'right-[370px]'} z-[100] rounded-full cursor-pointer flex items-center `}
         onClick={handleClick}
         style={{ backgroundColor: chatBubbleButtonColor ? chatBubbleButtonColor : '#3f6212' }}>
         {iconstatus ? (chatbotIcon &&
