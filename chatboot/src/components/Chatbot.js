@@ -41,6 +41,7 @@ const Chatbot = () => {
 
 
     const iframe = document.getElementById('chatcells.ai');
+    console.log(iframe);
     if (window.embeddedChatbotConfig) {
       bodyData.chatbotId = window.embeddedChatbotConfig.chatbotId;
       chatbotId.current = bodyData;
@@ -98,9 +99,9 @@ const Chatbot = () => {
               .filter(message => message.trim() !== '') // Filter out empty strings
               .length > 0 ? {
               html: `
-          <div class="deep-chat-temporary-message">
+          <div class="deep-chat-temporary-message" style="display:flex;flex-direction:column;position:absolute;right:0px;width:100%">
             ${temp1.map((message) => (message &&
-                `<button class="deep-chat-button deep-chat-suggestion-button" style="margin-top: 5px;text-decoration: underline; color: blue; margin-left:6px;background-color:#F3F4F6">${message}</button>`
+                `<button class="deep-chat-button deep-chat-suggestion-button" style="color:${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor: '#3F6212'};border: 2px solid ${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor : '#3F6212'}; max-width:70%; border-radius:10px; padding:10px;margin-top: 5px;text-decoration: underline; margin-left:auto;margin-right:15px;background-color:#F3F4F6">${message}</button>`
               ))
                 }
           </div>`,
@@ -127,7 +128,7 @@ const Chatbot = () => {
 
     getData();
 
-  }, [])
+  }, [userMessageColor])
 
   //Handling query-chatbot
 
@@ -200,9 +201,9 @@ const Chatbot = () => {
           .filter(message => message.trim() !== '') // Filter out empty strings
           .length > 0 ? {
           html: `
-          <div class="deep-chat-temporary-message">
+          <div class="deep-chat-temporary-message" style="display:flex;flex-direction:column;position:absolute;right:0px;width:100%">
             ${suggestedMessagesarray.map((message) => (message &&
-            `<button class="deep-chat-button deep-chat-suggestion-button" style="margin-top: 5px;text-decoration: underline; color: blue; margin-left:6px;background-color:#F3F4F6">${message}</button>`
+            `<button class="deep-chat-button deep-chat-suggestion-button" style="color:${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor: '#3F6212'};border: 2px solid ${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor : '#3F6212'}; max-width:70%; border-radius:10px; padding:10px;margin-top: 5px;text-decoration: underline; margin-left:auto;margin-right:15px;background-color:#F3F4F6">${message}</button>`
           ))
             }
           </div>`,
@@ -225,9 +226,9 @@ const Chatbot = () => {
             .filter(message => message.trim() !== '') // Filter out empty strings
             .length > 0 ? {
             html: `
-          <div class="deep-chat-temporary-message">
+          <div class="deep-chat-temporary-message" style="display:flex;flex-direction:column;position:absolute;right:0px;width:100%">
             ${suggestedMessagesarray.map((message) => (message &&
-              `<button class="deep-chat-button deep-chat-suggestion-button" style="margin-top: 5px">${message}</button>`
+              `<button class="deep-chat-button deep-chat-suggestion-button" style="color:${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor: '#3F6212'};border: 2px solid ${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor : '#3F6212'}; max-width:70%; border-radius:10px; padding:10px;margin-top: 5px;text-decoration: underline; margin-left:auto;margin-right:15px;background-color:#F3F4F6">${message}</button>`
             ))
               }
           </div>`,
@@ -255,7 +256,7 @@ const Chatbot = () => {
 
           <div className=" rounded-[0.8rem]   h-[530px] flex flex-col shadow-2xl ">
             {/* Refresh Part */}
-            <div className="refresh w-[100%] mx-auto  h-[9%] border-b border-solid border-lime-500/25 flex " style={{ backgroundColor: TitleBarColor?TitleBarColor : 'white' }}>
+            <div className="refresh rounded-t-[0.8rem] w-[100%] mx-auto  h-[9%] border-b border-solid border-lime-500/25 flex " style={{ backgroundColor: TitleBarColor?TitleBarColor : 'white' }}>
               <div className='profile flex gap-[6px] items-center p-1'>
                 {chatbotProfilePic !== 'None' && chatbotProfilePic && <div className='p-1  rounded-[50px]'>
                   <img src={chatbotProfilePic} alt='profile' className='w-[30px] h-[30px] bg-white rounded-full ' />
