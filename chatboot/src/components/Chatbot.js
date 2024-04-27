@@ -5,10 +5,12 @@ import { LuRefreshCcw } from "react-icons/lu";
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { DeepChat } from 'deep-chat-react';
 import "./Chatbot.css"
+import { useParams } from 'react-router-dom';
 
 
 const Chatbot = () => {
-
+  const { id } = useParams(); 
+  console.log(id);
   const chatElementRef = useRef(null);
   const [initialMessages, setinitialMessages] = useState([]);
   const [initialMessagesArray, setinitialMessagesArray] = useState();
@@ -53,20 +55,14 @@ const Chatbot = () => {
     };
 
 
-    const iframe = document.getElementById('chatcells.ai');
-    console.log(iframe);
     if (window.embeddedChatbotConfig) {
       bodyData.chatbotId = window.embeddedChatbotConfig.chatbotId;
       chatbotId.current = bodyData;
 
     }
-    else if (iframe) {
-      const iframeChatbotId = iframe.getAttribute('chatbotId');
-      console.log(iframeChatbotId);
-      if (iframeChatbotId) {
-        bodyData.chatbotId = iframeChatbotId;
+    else if (id) {
+        bodyData.chatbotId = id;
         chatbotId.current = bodyData;
-      }
     }
 
     //Logic to retrieve data corresponding to chatbotId
@@ -141,7 +137,7 @@ const Chatbot = () => {
 
     getData();
 
-  }, [userMessageColor])
+  }, [userMessageColor,id])
 
   //Handling query-chatbot
 
@@ -263,11 +259,11 @@ const Chatbot = () => {
   return (
     <>
 
-      <div className={`fixed ${iconstatus ? 'invisible' : ''}   z-[100]  right-0 top-4 sm:top-16  flex flex-col w-[320px] sm:w-[420px]  gap-3 ml-auto  mr-4 sm:mr-12 `}>
+      <div className={`fixed ${iconstatus ? 'invisible' : ''}   z-[100]  right-0 top-4 sm:top-16  flex flex-col w-[320px] sm:w-[460px]  gap-3 ml-auto  mr-4 sm:mr-10 `}>
 
         <div className={`flex flex-col relative ${theme === ('dark' || 'Dark') ? 'bg-black' : 'bg-white'} gap-4 rounded-[0.9rem] ${!iconstatus ? 'transition-all transform translate-y-0 duration-500 ease-in-out opacity-1' : 'opacity-0 transform translate-y-full transition-all duration-500 ease-in-out'}`}>
 
-          <div className=" rounded-[0.8rem]   h-[540px] flex flex-col shadow-2xl ">
+          <div className=" rounded-[0.8rem] h-[530px] sm:h-[600px]  flex flex-col shadow-2xl ">
             {/* Refresh Part */}
             <div className="refresh rounded-t-[0.8rem] w-[100%] mx-auto  h-[9%] border-b border-solid border-lime-500/25 flex " style={{ backgroundColor: TitleBarColor ? TitleBarColor : 'white' }}>
               <div className='profile flex gap-[6px] items-center p-1'>
@@ -292,7 +288,7 @@ const Chatbot = () => {
 
               <DeepChat
 
-                style={{ width: '100%', height: '470px', border: 'none', backgroundColor: 'transparent' }}
+                style={{ width: '100%', height: '99.5%', border: 'none', backgroundColor: 'transparent' }}
                 textInput={{
                   styles: {
                     text: { color: 'black' },
@@ -373,7 +369,7 @@ const Chatbot = () => {
       </div>
 
       <div
-        className={`fixed   top-[580px] sm:top-[650px] w-[55px] h-[55px] mr-4 sm:mr-12 mt-0  ${(position === 'Right') || (position === 'right') || (position === '') ? 'right-0' : (screenWidth > 640 ? 'right-[360px]' : 'right-[260px]')} z-[100] rounded-full cursor-pointer flex items-center `}
+        className={`fixed   top-[580px] sm:top-[700px] w-[55px] h-[55px] mr-4 sm:mr-10 mt-0  ${(position === 'Right') || (position === 'right') || (position === '') ? 'right-0' : (screenWidth > 640 ? 'right-[360px]' : 'right-[260px]')} z-[100] rounded-full cursor-pointer flex items-center `}
         onClick={handleClick}
         style={{ backgroundColor: chatBubbleButtonColor ? chatBubbleButtonColor : '#3f6212' }}>
         {iconstatus ? (chatbotIcon &&
