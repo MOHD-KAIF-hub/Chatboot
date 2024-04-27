@@ -52,24 +52,13 @@ const Chatbot = () => {
       "chatbotId": ""
     };
 
+console.log('Iframe removed');
 
-    const iframe = document.getElementById('chatcells.ai');
- 
-    console.log(iframe);
     if (window.embeddedChatbotConfig) {
       bodyData.chatbotId = window.embeddedChatbotConfig.chatbotId;
       chatbotId.current = bodyData;
 
     }
-    else if (iframe) {
-      const iframeChatbotId = iframe.getAttribute('chatbotId');
-      console.log(iframeChatbotId);
-      if (iframeChatbotId) {
-        bodyData.chatbotId = iframeChatbotId;
-        chatbotId.current = bodyData;
-      }
-    }
-
     //Logic to retrieve data corresponding to chatbotId
 
     const getData = async () => {
