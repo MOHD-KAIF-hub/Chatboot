@@ -19,7 +19,7 @@ const Chatbot = () => {
   const [name, setname] = useState("");
   const [placeholder, setplaceholder] = useState('');
   const [userMessageColor, setuserMessageColor] = useState('');
-  const [position, setposition] = useState('left');
+  const [position, setposition] = useState('');
   const [chatbotIcon, setchatbotIcon] = useState();
   const [chatbotProfilePic, setchatbotProfilePic] = useState();
   const [chatBubbleButtonColor, setchatBubbleButtonColor] = useState();
