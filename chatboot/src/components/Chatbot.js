@@ -19,7 +19,7 @@ const Chatbot = () => {
   const [name, setname] = useState("");
   const [placeholder, setplaceholder] = useState('');
   const [userMessageColor, setuserMessageColor] = useState('');
-  const [position, setposition] = useState('');
+  const [position, setposition] = useState('left');
   const [chatbotIcon, setchatbotIcon] = useState();
   const [chatbotProfilePic, setchatbotProfilePic] = useState();
   const [chatBubbleButtonColor, setchatBubbleButtonColor] = useState();
@@ -30,8 +30,21 @@ const Chatbot = () => {
   const conversationId = useRef('');
 
 
-  //To get Information about chatbotId when page will load
+//Calculating dyanamic width
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  //To get Information about chatbotId when page will load
   useEffect(() => {
 
     const bodyData = {
@@ -250,7 +263,7 @@ const Chatbot = () => {
   return (
     <>
 
-      <div className={`fixed ${iconstatus ? 'invisible' : ''}   z-[100]  right-0 top-16  flex flex-col w-[420px]  gap-3 ml-auto  mr-7 `}>
+      <div className={`fixed ${iconstatus ? 'invisible' : ''}   z-[100]  right-0 top-16  flex flex-col w-[320px] sm:w-[420px]  gap-3 ml-auto  mr-12 `}>
 
         <div className={`flex flex-col relative ${theme === ('dark' || 'Dark') ? 'bg-black' : 'bg-white'} gap-4 rounded-[0.9rem] ${!iconstatus ? 'transition-all transform translate-y-0 duration-500 ease-in-out opacity-1' : 'opacity-0 transform translate-y-full transition-all duration-500 ease-in-out'}`}>
 
@@ -360,7 +373,7 @@ const Chatbot = () => {
       </div>
 
       <div
-        className={`fixed top-[650px] w-[55px] h-[55px] mr-5 mt-0 ${position === ('Right' || 'right' || '') ? 'right-0' : 'right-[370px]'} z-[100] rounded-full cursor-pointer flex items-center `}
+       className={`fixed top-[650px] w-[55px] h-[55px] mr-12 mt-0  ${(position === 'Right') || (position === 'right') || (position === '')  ? 'right-0' : (screenWidth > 640 ? 'right-[360px]' : 'right-[260px]')} z-[100] rounded-full cursor-pointer flex items-center `}
         onClick={handleClick}
         style={{ backgroundColor: chatBubbleButtonColor ? chatBubbleButtonColor : '#3f6212' }}>
         {iconstatus ? (chatbotIcon &&
