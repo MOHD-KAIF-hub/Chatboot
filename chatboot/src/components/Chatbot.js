@@ -23,14 +23,14 @@ const Chatbot = () => {
   const [chatbotIcon, setchatbotIcon] = useState();
   const [chatbotProfilePic, setchatbotProfilePic] = useState();
   const [chatBubbleButtonColor, setchatBubbleButtonColor] = useState();
-  const [TitleBarColor,setTitleBarColor]=useState();
+  const [TitleBarColor, setTitleBarColor] = useState();
 
 
   const chatbotId = useRef('');
   const conversationId = useRef('');
 
 
-//Calculating dyanamic width
+  //Calculating dyanamic width
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const Chatbot = () => {
       "customerId": "",
       "chatbotId": ""
     };
-  
+
 
     const iframe = document.getElementById('chatcells.ai');
     console.log(iframe);
@@ -114,7 +114,7 @@ const Chatbot = () => {
               html: `
           <div class="deep-chat-temporary-message" style="display:flex;flex-direction:column;position:absolute;right:0px;width:100%">
             ${temp1.map((message) => (message &&
-                `<button class="deep-chat-button deep-chat-suggestion-button" style="color:${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor: '#3F6212'};border: 2px solid ${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor : '#3F6212'}; max-width:70%; border-radius:10px; padding:10px;margin-top: 5px;text-decoration: underline; margin-left:auto;margin-right:15px;background-color:#F3F4F6">${message}</button>`
+                `<button class="deep-chat-button deep-chat-suggestion-button" style="color:${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor : '#3F6212'};border: 2px solid ${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor : '#3F6212'}; max-width:70%; border-radius:10px; padding:10px;margin-top: 5px;text-decoration: underline; margin-left:auto;margin-right:15px;background-color:#F3F4F6">${message}</button>`
               ))
                 }
           </div>`,
@@ -216,7 +216,7 @@ const Chatbot = () => {
           html: `
           <div class="deep-chat-temporary-message" style="display:flex;flex-direction:column;position:absolute;right:0px;width:100%">
             ${suggestedMessagesarray.map((message) => (message &&
-            `<button class="deep-chat-button deep-chat-suggestion-button" style="color:${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor: '#3F6212'};border: 2px solid ${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor : '#3F6212'}; max-width:70%; border-radius:10px; padding:10px;margin-top: 5px;text-decoration: underline; margin-left:auto;margin-right:15px;background-color:#F3F4F6">${message}</button>`
+            `<button class="deep-chat-button deep-chat-suggestion-button" style="color:${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor : '#3F6212'};border: 2px solid ${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor : '#3F6212'}; max-width:70%; border-radius:10px; padding:10px;margin-top: 5px;text-decoration: underline; margin-left:auto;margin-right:15px;background-color:#F3F4F6">${message}</button>`
           ))
             }
           </div>`,
@@ -241,7 +241,7 @@ const Chatbot = () => {
             html: `
           <div class="deep-chat-temporary-message" style="display:flex;flex-direction:column;position:absolute;right:0px;width:100%">
             ${suggestedMessagesarray.map((message) => (message &&
-              `<button class="deep-chat-button deep-chat-suggestion-button" style="color:${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor: '#3F6212'};border: 2px solid ${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor : '#3F6212'}; max-width:70%; border-radius:10px; padding:10px;margin-top: 5px;text-decoration: underline; margin-left:auto;margin-right:15px;background-color:#F3F4F6">${message}</button>`
+              `<button class="deep-chat-button deep-chat-suggestion-button" style="color:${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor : '#3F6212'};border: 2px solid ${(userMessageColor !== undefined && userMessageColor !== '') ? userMessageColor : '#3F6212'}; max-width:70%; border-radius:10px; padding:10px;margin-top: 5px;text-decoration: underline; margin-left:auto;margin-right:15px;background-color:#F3F4F6">${message}</button>`
             ))
               }
           </div>`,
@@ -263,16 +263,16 @@ const Chatbot = () => {
   return (
     <>
 
-      <div className={`fixed ${iconstatus ? 'invisible' : ''}   z-[100]  right-0 top-6 sm:top-16  flex flex-col w-[320px] sm:w-[420px]  gap-3 ml-auto  mr-4 sm:mr-12 `}>
+      <div className={`fixed ${iconstatus ? 'invisible' : ''}   z-[100]  right-0 top-4 sm:top-16  flex flex-col w-[320px] sm:w-[420px]  gap-3 ml-auto  mr-4 sm:mr-12 `}>
 
         <div className={`flex flex-col relative ${theme === ('dark' || 'Dark') ? 'bg-black' : 'bg-white'} gap-4 rounded-[0.9rem] ${!iconstatus ? 'transition-all transform translate-y-0 duration-500 ease-in-out opacity-1' : 'opacity-0 transform translate-y-full transition-all duration-500 ease-in-out'}`}>
 
           <div className=" rounded-[0.8rem]   h-[540px] flex flex-col shadow-2xl ">
             {/* Refresh Part */}
-            <div className="refresh rounded-t-[0.8rem] w-[100%] mx-auto  h-[9%] border-b border-solid border-lime-500/25 flex " style={{ backgroundColor: TitleBarColor?TitleBarColor : 'white' }}>
+            <div className="refresh rounded-t-[0.8rem] w-[100%] mx-auto  h-[9%] border-b border-solid border-lime-500/25 flex " style={{ backgroundColor: TitleBarColor ? TitleBarColor : 'white' }}>
               <div className='profile flex gap-[6px] items-center p-1'>
                 {chatbotProfilePic !== 'None' && chatbotProfilePic && <div className='p-1  rounded-[50px]'>
-                  <img src={chatbotProfilePic} alt='profile' className='w-[30px] h-[30px] bg-white rounded-full ' />
+                  <img src={chatbotProfilePic} alt='' className='w-[30px] h-[30px] bg-white rounded-full ' />
                 </div>
                 }
                 {name && name.trim() !== '' && name !== 'None' && <span className={`font-medium text-gray-800 ml-1.5 opacity-90 ${theme === ('dark' || 'Dark') ? 'text-gray-400' : ''}`}>{name}
@@ -292,7 +292,7 @@ const Chatbot = () => {
 
               <DeepChat
 
-                style={{ width: '100%', height: '470px', border: 'none',backgroundColor:'transparent' }}
+                style={{ width: '100%', height: '470px', border: 'none', backgroundColor: 'transparent' }}
                 textInput={{
                   styles: {
                     text: { color: 'black' },
@@ -373,11 +373,11 @@ const Chatbot = () => {
       </div>
 
       <div
-       className={`fixed   top-[600px] sm:top-[650px] w-[55px] h-[55px] mr-4 sm:mr-12 mt-0  ${(position === 'Right') || (position === 'right') || (position === '')  ? 'right-0' : (screenWidth > 640 ? 'right-[360px]' : 'right-[260px]')} z-[100] rounded-full cursor-pointer flex items-center `}
+        className={`fixed   top-[580px] sm:top-[650px] w-[55px] h-[55px] mr-4 sm:mr-12 mt-0  ${(position === 'Right') || (position === 'right') || (position === '') ? 'right-0' : (screenWidth > 640 ? 'right-[360px]' : 'right-[260px]')} z-[100] rounded-full cursor-pointer flex items-center `}
         onClick={handleClick}
         style={{ backgroundColor: chatBubbleButtonColor ? chatBubbleButtonColor : '#3f6212' }}>
         {iconstatus ? (chatbotIcon &&
-          <img src={chatbotIcon} alt="chatlogo" className={`checkmark mx-auto  mt-[-8px] w-[70%] rounded-full font-[60px] transition-transform duration-500 ease-in-out transform ${iconstatus && 'icon-enter'}`} />
+          <img src={chatbotIcon} alt="" className={`checkmark mx-auto  mt-[-8px] w-[70%] rounded-full font-[60px] transition-transform duration-500 ease-in-out transform ${iconstatus && 'icon-enter'}`} />
         ) : (
           <RiArrowDownSLine
             className={`m-auto text-5xl text-white transform transition-transform duration-500 ease-in-out ${!iconstatus && 'icon-enter'}`}
