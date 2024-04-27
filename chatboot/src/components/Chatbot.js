@@ -5,12 +5,10 @@ import { LuRefreshCcw } from "react-icons/lu";
 import { RiArrowDownSLine } from 'react-icons/ri';
 import { DeepChat } from 'deep-chat-react';
 import "./Chatbot.css"
-import { useParams } from 'react-router-dom';
 
 
 const Chatbot = () => {
-  const { id } = useParams(); 
-  console.log(id);
+
   const chatElementRef = useRef(null);
   const [initialMessages, setinitialMessages] = useState([]);
   const [initialMessagesArray, setinitialMessagesArray] = useState();
@@ -55,14 +53,21 @@ const Chatbot = () => {
     };
 
 
+    const iframe = document.getElementById('chatcells.ai');
+ 
+    console.log(iframe);
     if (window.embeddedChatbotConfig) {
       bodyData.chatbotId = window.embeddedChatbotConfig.chatbotId;
       chatbotId.current = bodyData;
 
     }
-    else if (id) {
-        bodyData.chatbotId = id;
+    else if (iframe) {
+      const iframeChatbotId = iframe.getAttribute('chatbotId');
+      console.log(iframeChatbotId);
+      if (iframeChatbotId) {
+        bodyData.chatbotId = iframeChatbotId;
         chatbotId.current = bodyData;
+      }
     }
 
     //Logic to retrieve data corresponding to chatbotId
@@ -137,7 +142,7 @@ const Chatbot = () => {
 
     getData();
 
-  }, [userMessageColor,id])
+  }, [userMessageColor])
 
   //Handling query-chatbot
 
