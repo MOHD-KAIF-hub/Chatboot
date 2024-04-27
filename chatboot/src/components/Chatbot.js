@@ -38,7 +38,7 @@ const Chatbot = () => {
       "customerId": "",
       "chatbotId": ""
     };
-
+  
 
     const iframe = document.getElementById('chatcells.ai');
     console.log(iframe);
@@ -250,11 +250,11 @@ const Chatbot = () => {
   return (
     <>
 
-      <div className={`fixed ${iconstatus ? 'invisible' : ''}   z-[100]  right-0 top-4  flex flex-col w-[420px]  gap-3 ml-auto  mr-7 `}>
+      <div className={`fixed ${iconstatus ? 'invisible' : ''}   z-[100]  right-0 top-16  flex flex-col w-[420px]  gap-3 ml-auto  mr-7 `}>
 
         <div className={`flex flex-col relative ${theme === ('dark' || 'Dark') ? 'bg-black' : 'bg-white'} gap-4 rounded-[0.9rem] ${!iconstatus ? 'transition-all transform translate-y-0 duration-500 ease-in-out opacity-1' : 'opacity-0 transform translate-y-full transition-all duration-500 ease-in-out'}`}>
 
-          <div className=" rounded-[0.8rem]   h-[530px] flex flex-col shadow-2xl ">
+          <div className=" rounded-[0.8rem]   h-[540px] flex flex-col shadow-2xl ">
             {/* Refresh Part */}
             <div className="refresh rounded-t-[0.8rem] w-[100%] mx-auto  h-[9%] border-b border-solid border-lime-500/25 flex " style={{ backgroundColor: TitleBarColor?TitleBarColor : 'white' }}>
               <div className='profile flex gap-[6px] items-center p-1'>
@@ -279,7 +279,7 @@ const Chatbot = () => {
 
               <DeepChat
 
-                style={{ width: '100%', height: '460px', border: 'none',backgroundColor:'transparent' }}
+                style={{ width: '100%', height: '470px', border: 'none',backgroundColor:'transparent' }}
                 textInput={{
                   styles: {
                     text: { color: 'black' },
@@ -360,7 +360,7 @@ const Chatbot = () => {
       </div>
 
       <div
-        className={`fixed bottom-8 w-[55px] h-[55px] mr-5 mt-0 ${position === ('Right' || 'right' || '') ? 'right-0' : 'right-[370px]'} z-[100] rounded-full cursor-pointer flex items-center `}
+        className={`fixed top-[65add0px] w-[55px] h-[55px] mr-5 mt-0 ${position === ('Right' || 'right' || '') ? 'right-0' : 'right-[370px]'} z-[100] rounded-full cursor-pointer flex items-center `}
         onClick={handleClick}
         style={{ backgroundColor: chatBubbleButtonColor ? chatBubbleButtonColor : '#3f6212' }}>
         {iconstatus ? (chatbotIcon &&
