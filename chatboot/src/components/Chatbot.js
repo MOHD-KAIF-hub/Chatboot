@@ -163,7 +163,7 @@ const Chatbot = () => {
 
 
           try {
-            const response = await fetch('http://34.224.93.99:5000/query-chatbot/', {
+            const response = await fetch('https://chatcells.ai/api/query-chatbot/', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(requestBody),
