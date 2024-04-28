@@ -32,8 +32,6 @@ const Chatbot = () => {
   useEffect(() => {
     // Accessing the iframe element
     const iframe = document.querySelector('iframe[src^="https://my-chatbot1.netlify.app/"]');
-    var divElements = document.getElementById("chatcells.ai");
-    console.log('Element should accessible'+divElements.getAttribute('chatbotId'));
   console.log(iframe);
     if (iframe) {
       // Parsing the src attribute to extract the id
