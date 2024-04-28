@@ -66,7 +66,13 @@ const Chatbot = () => {
     };
 
 
-    
+    const idInput=document.getElementById('chatbot_id');
+    let id='';
+    if(idInput)
+    {
+       id=idInput.value;
+    }
+    console.log("Id coming from iframe"+id);
   
     if (window.embeddedChatbotConfig) {
       bodyData.chatbotId = window.embeddedChatbotConfig.chatbotId;
