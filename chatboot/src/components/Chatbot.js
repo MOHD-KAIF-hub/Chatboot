@@ -29,6 +29,19 @@ const Chatbot = () => {
   const chatbotId = useRef('');
   const conversationId = useRef('');
 
+  useEffect(() => {
+    // Accessing the iframe element
+    const iframe = document.querySelector('iframe[src^="https://my-chatbot1.netlify.app/"]');
+  console.log(iframe);
+    if (iframe) {
+      // Parsing the src attribute to extract the id
+      const src = iframe.getAttribute('src');
+      const id = src.split('/').pop().split('=')[1]; // A
+      console.log(id);
+
+    }
+  }, []);
+
 
   //Calculating dyanamic width
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -52,13 +65,15 @@ const Chatbot = () => {
       "chatbotId": ""
     };
 
-console.log('Iframe removed');
 
+    
+  
     if (window.embeddedChatbotConfig) {
       bodyData.chatbotId = window.embeddedChatbotConfig.chatbotId;
       chatbotId.current = bodyData;
 
     }
+
     //Logic to retrieve data corresponding to chatbotId
 
     const getData = async () => {
